@@ -5,23 +5,25 @@ const titleInput = document.getElementById("titleInput");
 const taskInput = document.getElementById("taskInput");
 const taskPopover = document.getElementById('task-popover');
 
-
+let todos;
+let tasks;
 
 //fetching todos from api
 function getTodos() {
   axios.get("http://localhost:3000/todo")
     .then((res) => {
-      console.log('Fetched Todos: ', res.data);
-      displayTodos(res.data);
+      console.log('todo fetched from the api:',res.data);
+      todos = res.data.todos;
+      console.log('Only todos list: ',todos);
+      displayTodos(todos);
     })
     .catch((error) => {
       console.error("Error fetching todos:", error);
     });
 }
 
-
 //displaying the todos
-function displayTodos(todos) {
+function displayTodos() {
   displayTodo.innerHTML = "";
     todos.forEach((todo) => {
     const titleDiv = document.createElement("div");
@@ -49,6 +51,7 @@ function displayTodos(todos) {
     editIcon.addEventListener("click", () => {
       const newTitle = prompt("Edit the title:", todo.title);
       if (newTitle && newTitle.trim() !== "") {
+        console.log("todoId edit: ", todo.todoId);
         axios.put(`http://localhost:3000/todo/${todo.todoId}`, { title: newTitle })
           .then(() => getTodos())
           .catch((error) => console.error("Error editing todo:", error));
@@ -89,14 +92,15 @@ function addTitleInput() {
   }
 }
 
-//displaying the tasks and displaying updated tasks
-function displayTasks(todoId) {
-  axios.get(`http://localhost:3000/todo/${todoId}/tasks`)
-    .then((res) => {
-      const tasks = res.data.tasks;
-      displayTask.innerHTML = "";
 
-      tasks.forEach((task) => {
+function displayTasks(todoId) {
+    console.log("Displaying tasks for the todoId:",todoId);
+    axios.get(`http://localhost:3000/todo/${todoId}/tasks`)
+    .then((res) => {
+        tasks = res.data.tasks;
+        console.log(tasks);
+        displayTask.innerHTML = "";
+        tasks.forEach((task) => {
         const taskDiv = document.createElement("div");
         taskDiv.classList.add("task");
 
@@ -116,7 +120,7 @@ function displayTasks(todoId) {
 
         checkBox.addEventListener("change", () => {
           task.completed = checkBox.checked;
-          axios.put(`http://localhost:3000/todo/${todoId}/tasks/${task.taskId}`, { completed: task.completed })
+          axios.put(`http://localhost:3000/todo/${todoId}/tasks/${task.taskId}`,{completed:task.completed})
             .then(() => displayTasks(todoId))
             .catch((error) => console.error("Error updating task:", error));
         });
