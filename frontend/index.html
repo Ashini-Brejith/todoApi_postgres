@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Todo List Display</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/4472/4472515.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+    <h1 class="todo-list">Todo List</h1>
+
+    <div id="todo-container"></div>
+    <div id="titleInputBox-container">
+        <input id="titleInput" type="text" placeholder="Type your todo here...">    
+    </div>
+    <div id="addTitleBtnDiv">
+        <button type="button" class="addTitleBtn" onclick="addTitleInput()">ADD TODO</button>
+    </div>  
+    
+    <div class="task-container" id="task-popover" popover>
+        <h1 style="display: flex; justify-content: center;">Task List</h1>
+
+    <div id="task-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;"></div>
+
+   
+        <div id="taskInputBox-container">
+            
+            <input id="taskInput" type="text" placeholder="Type your task here..." data-todo-id="">
+        
+       </div>
+       <div id="addTaskBtnDiv" style="display: flex; justify-content: center; padding:5%;">
+
+        <button type="button" class="addTaskBtn" onclick="addTaskInput()" style="font-family: cursive;">ADD TASK</button>
+
+    </div>
+    </div>
+
+
+    <script src="demoscript.js"></script>
+    
+
+</body>
+</html>
