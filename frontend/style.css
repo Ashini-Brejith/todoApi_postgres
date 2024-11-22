@@ -65,6 +65,8 @@ body{
     border: none;
     background-color: transparent;
     font-weight: bolder;
+    justify-items: left;
+    width: 60%;
 } 
 .title-div{
     display: flex;
